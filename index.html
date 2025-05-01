@@ -1,45 +1,196 @@
-<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulaciones de química</title>
+  <script src="1d.js"></script>
+  <style>
+  
+	body {
+		margin: 0;
+		font-family: calibri;
+		display: flex;
+		height: 100vh;
+	}
 
-    <!-- Bootstrap5 css and js-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	.sidebar {
+		width: 20%;
+		background: #f0f0f0;
+		border: 5px solid black;
+		border-radius: 20px;
+		margin: 5px;
+		box-sizing: border-box;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		align-items: center;
+		height: 100vh;
+    }
 
-    <title>Particula en una caja unidemensional</title>
+.sidebar-item {
+		display: flex;
+		align-items: center;
+		margin: 10px 0;
+		cursor: pointer;
+		flex-grow: 1; /* Make the items grow to fill the height */
+		justify-content: flex-start;
+		gap: 10px;
+		width: 100%;
+	}
 
+	.sidebar-bar {
+		margin-left: 5%;
+		width: 70%;
+		height: 15%; /* This will scale the bars */
+		background-color: black;
+		margin-right: 10px;
+	}
+
+	.sidebar-text {
+		font-size: 14px;
+		color: #333;
+	}
+
+	.sidebar-item:hover .sidebar-bar {
+		background-color: #2980b9; /* Darker blue on hover */
+	}
+
+	.main {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		margin: 5px;
+	}
+
+	.top-bar {
+		height: 40px;
+		background: #e0e0e0;
+		border: 5px solid black;
+		border-radius: 20px;
+		margin-bottom: 5px;
+		display: flex;
+		justify-content: left;
+		align-items: center;
+	}
+
+	.content {
+		flex: 1;
+		background: #ffffff;
+		border: 5px solid black;
+		border-radius: 20px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.mode-button {
+		margin: 0 10px;
+		padding: 5px 20px;
+		font-size: 16px;
+		height: 30px;
+		border: none;
+		border-radius: 10px;
+		background-color: #ccc;
+		cursor: pointer;
+		transition: background-color 0.2s;
+	}
+	
+	.mode-button:hover {
+		background-color: #aaa;
+	}
+	
+	.button-group {
+		display: flex;
+			gap: 10px; /* space between buttons */
+	}
+	
+  </style>
 </head>
-
 <body>
-    <div class="m-3 border border-3 rounded">
-        <h1 class="text-center">Particula en una caja unidemensional</h1>
-    </div>
 
-    <div class="containter">
+	<div class="sidebar">
+		<div class="sidebar-item" data-item="n9">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 9</span>
+		</div>
+		<div class="sidebar-item" data-item="n8">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 8</span>
+		</div>
+		<div class="sidebar-item" data-item="n7">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 7</span>
+		</div>
+		<div class="sidebar-item" data-item="n6">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 6</span>
+		</div>
+		<div class="sidebar-item" data-item="n5">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 5</span>
+		</div>
+		<div class="sidebar-item" data-item="n4">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 4</span>
+		</div>
+		<div class="sidebar-item" data-item="n3">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 3</span>
+		</div>
+		<div class="sidebar-item" data-item="n2">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 2</span>
+		</div>
+		<div class="sidebar-item" data-item="n1">
+		<div class="sidebar-bar"></div>
+		<span class="sidebar-text">n = 1</span>
+		</div>
+	</div>
+	
+	<div class="main">
+		<div class="top-bar">
+			<div class="button-group">
+				<button class="mode-button" data-mode="1d">1D</button>
+				<button class="mode-button" data-mode="2d">2D</button>
+				<button class="mode-button" data-mode="3d">3D</button>
+			</div>
+		</div>
+		<div class="content" id="main-content">Select a mode to run code
+		</div>
+	</div>
 
-        <div id="controlers" class="container py-2 border d-flex flex-wrap justify-content-center">
-            
-            <div class="col-10 d-flex justify-content-center">
-                <label for="n-slider">Quantum Number (n): <span id="n-value">1</span></label>
-                <input type="range" id="n-slider" min="1" max="10" value="1">    
-            </div>
-    
-            <div class="col-10 d-flex justify-content-center">
-                <label for="l-slider">Box Length (L): <span id="l-value">1.00</span></label>
-                <input type="range" id="l-slider" min="0.5" max="2" step="0.01" value="1">        
-            </div>
-        </div>
-        
-        <div id="simulation" class="container border col-12 d-flex justify-content-center">
-            <canvas class="col-md-6" id="canvas" width="400" height="350" ></canvas>
-            <script src="script.js"></script>
-        </div>
+	<script>
+	
+		const mainContent = document.getElementById('main-content');
 
+		function run1D() {
+			mainContent.innerText = 'Running 1D program...';
+			run1d();
+		}
+ 
 
-    </div>
+		function run2D() {
+			mainContent.innerText = 'Nope 2d';
+			// Placeholder: Add your 2D logic here
+		}
+
+		function run3D() {
+			mainContent.innerText = 'Nope 3d';
+			// Placeholder: Add your 3D logic here
+		}
+
+		// Button click handler
+		document.querySelectorAll('.mode-button').forEach(button => {
+			button.addEventListener('click', () => {
+				const mode = button.getAttribute('data-mode');
+				if (mode === '1d') run1D();
+				else if (mode === '2d') run2D();
+				else if (mode === '3d') run3D();
+			});
+		});
+		
+</script>
+
 </body>
 
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap5 css and js-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <title>Particula en una caja unidemensional</title>
+
+</head>
+
+<body>
+    <div class="m-3 border border-3 rounded">
+        <h1 class="text-center">Particula en una caja unidemensional</h1>
+    </div>
+
+    <div class="containter">
+
+        <div id="controlers" class="container py-2 border d-flex flex-wrap justify-content-center">
+            
+            <div class="col-10 d-flex justify-content-center">
+                <label for="n-slider">Quantum Number (n): <span id="n-value">1</span></label>
+                <input type="range" id="n-slider" min="1" max="10" value="1">    
+            </div>
+    
+            <div class="col-10 d-flex justify-content-center">
+                <label for="l-slider">Box Length (L): <span id="l-value">1.00</span></label>
+                <input type="range" id="l-slider" min="0.5" max="2" step="0.01" value="1">        
+            </div>
+        </div>
+        
+        <div id="simulation" class="container border col-12 d-flex justify-content-center">
+            <canvas class="col-md-6" id="canvas" width="400" height="350" ></canvas>
+            <script src="script.js"></script>
+        </div>
+
+
+    </div>
+</body>
+
+</html>
