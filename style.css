@@ -1,0 +1,12 @@
+.sidebar-bar {
+    width: 100%;
+    height: 5px;
+    /* This will scale the bars */
+    background-color: white;
+}
+
+button:hover .sidebar-bar{
+    background-color: black;
+}
+
+

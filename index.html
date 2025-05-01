@@ -1,173 +1,94 @@
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simulaciones de química</title>
-  <script src="1d.js"></script>
-  <style>
-  
-	body {
-		margin: 0;
-		font-family: calibri;
-		display: flex;
-		height: 100vh;
-	}
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Simulaciones de química</title>
+	<script src="1d.js"></script>
 
-	.sidebar {
-		width: 20%;
-		background: #f0f0f0;
-		border: 5px solid black;
-		border-radius: 20px;
-		margin: 5px;
-		box-sizing: border-box;
-		display: flex;
-		flex-direction: column;
-		justify-content: flex-start;
-		align-items: center;
-		height: 100vh;
-    }
+	<!-- Bootstrap5 css and js-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-.sidebar-item {
-		display: flex;
-		align-items: center;
-		margin: 10px 0;
-		cursor: pointer;
-		flex-grow: 1; /* Make the items grow to fill the height */
-		justify-content: flex-start;
-		gap: 10px;
-		width: 100%;
-	}
+	<!-- My styles-->
+	<link rel="stylesheet" href="style.css">
 
-	.sidebar-bar {
-		margin-left: 5%;
-		width: 70%;
-		height: 15%; /* This will scale the bars */
-		background-color: black;
-		margin-right: 10px;
-	}
-
-	.sidebar-text {
-		font-size: 14px;
-		color: #333;
-	}
-
-	.sidebar-item:hover .sidebar-bar {
-		background-color: #2980b9; /* Darker blue on hover */
-	}
-
-	.main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		margin: 5px;
-	}
-
-	.top-bar {
-		height: 40px;
-		background: #e0e0e0;
-		border: 5px solid black;
-		border-radius: 20px;
-		margin-bottom: 5px;
-		display: flex;
-		justify-content: left;
-		align-items: center;
-	}
-
-	.content {
-		flex: 1;
-		background: #ffffff;
-		border: 5px solid black;
-		border-radius: 20px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.mode-button {
-		margin: 0 10px;
-		padding: 5px 20px;
-		font-size: 16px;
-		height: 30px;
-		border: none;
-		border-radius: 10px;
-		background-color: #ccc;
-		cursor: pointer;
-		transition: background-color 0.2s;
-	}
-	
-	.mode-button:hover {
-		background-color: #aaa;
-	}
-	
-	.button-group {
-		display: flex;
-			gap: 10px; /* space between buttons */
-	}
-	
-  </style>
 </head>
+
 <body>
 
-	<div class="sidebar">
-		<div class="sidebar-item" data-item="n9">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 9</span>
-		</div>
-		<div class="sidebar-item" data-item="n8">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 8</span>
-		</div>
-		<div class="sidebar-item" data-item="n7">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 7</span>
-		</div>
-		<div class="sidebar-item" data-item="n6">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 6</span>
-		</div>
-		<div class="sidebar-item" data-item="n5">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 5</span>
-		</div>
-		<div class="sidebar-item" data-item="n4">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 4</span>
-		</div>
-		<div class="sidebar-item" data-item="n3">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 3</span>
-		</div>
-		<div class="sidebar-item" data-item="n2">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 2</span>
-		</div>
-		<div class="sidebar-item" data-item="n1">
-		<div class="sidebar-bar"></div>
-		<span class="sidebar-text">n = 1</span>
-		</div>
-	</div>
-	
-	<div class="main">
-		<div class="top-bar">
-			<div class="button-group">
-				<button class="mode-button" data-mode="1d">1D</button>
-				<button class="mode-button" data-mode="2d">2D</button>
-				<button class="mode-button" data-mode="3d">3D</button>
+	<header class="container-fluid bg-primary">
+		<h1 class="container text-white text-center p-3">Partícula en la caja</h1>
+	</header>
+
+	<div class="container d-flex justify-content-between">
+
+		<div class="sidebar col-md-2 shadow-lg rounded-3 bg-secondary text-white p-2">
+
+
+			<div style="height:80vh" class="sidebar-item d-flex justify-content-between" data-item="n1">
+				<div class="btn-group-vertical col align-text-bottom">
+					<button style="height: 5vh;" type="button" class="n_number btn btn-secondary" value="9">
+						<div class="sidebar-bar"></div>n=9
+					</button>
+					<button style="height: 5vh;" type="button" class="n_number btn btn-secondary" value="8">
+						<div class="sidebar-bar"></div>n=8
+					</button>
+					<button style="height: 6vh;" type="button" class="n_number btn btn-secondary" value="7">
+						<div class="sidebar-bar"></div>n=7
+					</button>
+					<button style="height: 7vh;" type="button" class="n_number btn btn-secondary" value="6">
+						<div class="sidebar-bar"></div>n=6
+					</button>
+					<button style="height: 8vh;" type="button" class="n_number btn btn-secondary" value="5">
+						<div class="sidebar-bar"></div>n=5
+					</button>
+					<button style="height: 10vh;" type="button" class="n_number btn btn-secondary" value="4">
+						<div class="sidebar-bar"></div>n=4
+					</button>
+					<button style="height: 12vh;" type="button" class="n_number btn btn-secondary" value="3">
+						<div class="sidebar-bar"></div>n=3
+					</button>
+					<button style="height: 15vh;" type="button" class="n_number btn btn-secondary" value="2">
+						<div class="sidebar-bar"></div>n=2
+					</button>
+					<button style="height: 25vh;" type="button" class="n_number btn btn-secondary active" value="1">
+						<div class="sidebar-bar"></div>n=1
+					</button>
+				</div>
+
 			</div>
 		</div>
-		<div class="content" id="main-content">Select a mode to run code
+
+		<div class="main col">
+			<div class="d-flex justify-content-center p-2">
+				<div class="button-group btn-group mx-2">
+					<button type="button" class="dimension mode-button btn btn-primary" data-mode="1d">1D</button>
+					<button type="button" class="dimension mode-button btn btn-primary" data-mode="2d">2D</button>
+					<button type="button" class="dimension mode-button btn btn-primary" data-mode="3d">3D</button>
+				</div>
+
+				<div class="mx-2 d-flex align-items-center">
+					<input type="checkbox" id="stanfing_wave" value="stanfing_wave" checked />
+					<label for="stanfing_wave">Onda estacionaria</label>
+				</div>
+			</div>
+
+			<div class="content h-75" id="main-content">Select a mode to run code
+			</div>
 		</div>
 	</div>
 
+
 	<script>
-	
+
 		const mainContent = document.getElementById('main-content');
 
-		function run1D() {
+		function run1D(n) {
 			mainContent.innerText = 'Running 1D program...';
-			run1d();
+			run1d(n);
 		}
- 
+
 
 		function run2D() {
 			mainContent.innerText = 'Nope 2d';
@@ -182,14 +103,74 @@
 		// Button click handler
 		document.querySelectorAll('.mode-button').forEach(button => {
 			button.addEventListener('click', () => {
+
+				// Definir que boton esta activo
+				let dim_buttons = document.getElementsByClassName("dimension")
+				for (let i = 0; i < dim_buttons.length; i++) {
+					dim_buttons[i].classList.remove("active")
+				}
+
+				// identificar que n esta seleccionado
+				let selected_n = 1
+
+				let n_numbers = document.getElementsByClassName("n_number")
+				for (let i = 0; i < n_numbers.length; i++) {
+					if (n_numbers[i].classList.contains("active")) {
+						selected_n = n_numbers[i].value
+					}
+				}
+
+				console.log("n = "+selected_n)
 				const mode = button.getAttribute('data-mode');
-				if (mode === '1d') run1D();
-				else if (mode === '2d') run2D();
-				else if (mode === '3d') run3D();
+				if (mode === '1d') {
+					run1D(selected_n);
+					button.classList.add("active");
+				}
+				else if (mode === '2d') {
+					run2D(selected_n);
+					button.classList.add("active");
+				}
+				else if (mode === '3d') {
+					run3D(selected_n);
+					button.classList.add("active");
+				}
 			});
 		});
-		
-</script>
+
+		document.querySelectorAll('.n_number').forEach(button => {
+			button.addEventListener('click', () => {
+				let n_numbers = document.getElementsByClassName("n_number")
+				for (let i = 0; i < n_numbers.length; i++) {
+					n_numbers[i].classList.remove("active")
+				}
+
+				button.classList.add("active")
+
+				let selected_n = button.value
+				console.log("n = "+selected_n)
+				let dim_buttons = document.getElementsByClassName("dimension")
+				for (let i = 0; i < dim_buttons.length; i++) {
+					if (dim_buttons[i].classList.contains("active")) {
+						let mode = dim_buttons[i].getAttribute("data-mode")
+						if (mode === '1d') {
+							run1D(selected_n);
+							button.classList.add("active");
+						}
+						else if (mode === '2d') {
+							run2D(selected_n);
+							button.classList.add("active");
+						}
+						else if (mode === '3d') {
+							run3D(selected_n);
+							button.classList.add("active");
+						}
+					}
+				}
+
+
+			});
+		});
+	</script>
 
 </body>
 
