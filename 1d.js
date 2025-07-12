@@ -2,7 +2,7 @@ function run1d(n,boxLength) {
 	
   // Constantes básicas
   const width = 1000;
-  const height = 500;
+  const height = 400;
   const boxMargin = 50;
   const pts = 200;
   const baseOmega = 0.004;
@@ -10,7 +10,7 @@ function run1d(n,boxLength) {
   const L = boxLength;
   const maxMultiple = 1;
   const pxPerUnit = 100; 
-  const graphWidth  = pxPerUnit * L * maxMultiple + 2 * boxMargin;
+  const graphWidth  = pxPerUnit * L * maxMultiple *0.9+ 2 * boxMargin;
   const graphHeight = 500;      // keep your old height
   const tickVals = d3.range(0, maxMultiple + 1).map(k => k * L);
 
