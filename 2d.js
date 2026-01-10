@@ -1,73 +1,85 @@
-let solution = Shrodinger_solution(1, 1, 1, 3, 3, 2)
+// --- Solución base ---
+let solution = Shrodinger_solution(2, 3, 1, 1e-16, 1e-10, 1e-16);
 
+const x = solution.x;
+const y = solution.y;
+const baseZ = solution.structured_wavefunction;
 
-// pause
-//console.log(solution)
-const max_wavefuntion = Math.max(...solution.wavefunction)
-const max_prob_density = Math.max(...solution.prob_density)
-const max_x = Math.max(...solution.x)
-const max_y = Math.max(...solution.y)
-const max_z = Math.max(...solution.z)
+// --- Utilidades ---
+const maxAbs = Math.max(...baseZ.flat().map(v => Math.abs(v)));
 
-/*
-var data = [{
-    type: 'surface',
-    z: [
-        solution.x.map(x => x / max_x), //nomerlization
-        solution.y.map(y => y / max_y), //nomerlization
-        solution.z.map(z => z / max_z),
-        solution.z  //nomerlization
-        //solution.prob_density //nomerlization
-    ]
-}];
-
-var z = [
-  [1, 1, 1, 1],
-  [1, 1, 1, 2]
-
-];
-
-var data = [{
-  type: 'surface',
-  x: [0, 2, 4, 6],
-  z: [0, 2, 4, 6],
-  z: z
-}];
-
-var layout = {
-    autosize: true
+function waveAtTime(Z0, t, omega = 1) {
+  const factor = Math.sin(omega * t);
+  return Z0.map(row => row.map(v => v * factor));
 }
 
+// --- Trace inicial ---
+var data = [{
+  type: 'surface',
+  x: x,
+  y: y,
+  z: waveAtTime(baseZ, 0),
+  colorscale: 'RdBu',
+  cmin: -maxAbs,
+  cmax:  maxAbs,
+  showscale: true,
+}];
 
-Plotly.newPlot('2d_chart', data, layout)
-*/
+// --- Frames (animación temporal) ---
+var frames = [];
+const Nt = 60;
+const omega = 2 * Math.PI;
 
-  var x = [];
-  var y = [];
-  var z = [];
+for (let k = 0; k < Nt; k++) {
+  const t = (k / Nt) * 2 * Math.PI;
 
-  // Nube de puntos 3D (paraboloide)
-  for (let i = 0; i <= 9; i++) {
-    for (let j = 0; j <= 9; j++) {
-      x.push(i/32);
-      y.push(j/56);
-      z.push(i*i+j*j);
+  frames.push({
+    name: `t=${t.toFixed(2)}`,
+    data: [{
+      z: waveAtTime(baseZ, t, omega)
+    }]
+  });
+}
+
+// --- Layout ---
+var layout = {
+  autosize: true,
+  scene: {
+    xaxis: { title: 'x' },
+    yaxis: { title: 'y' },
+    zaxis: {
+      title: 'ψ(x,y,t)',
+      range: [-maxAbs, maxAbs]
     }
-  }
+  },
+  updatemenus: [{
+    type: 'buttons',
+    showactive: false,
+    x: 0.1,
+    y: 0,
+    buttons: [
+      {
+        label: '▶ Play',
+        method: 'animate',
+        args: [null, {
+          frame: { duration: 100, redraw: true },
+          transition: { duration: 0 },
+        }]
+      },
+      {
+        label: '⏸ Pause',
+        method: 'animate',
+        args: [[null], {
+          mode: 'immediate',
+          frame: { duration: 0, redraw: false }
+        }]
+      }
+    ]
+  }]
+};
 
-console.log(x)
-console.log(y)
-console.log(z)
-console.log(solution.x)
-  var mesh = {
-    type: 'mesh3d',
-    x: x,
-    y: y,
-    z: z,
-    alphahull: 0,
-    opacity: 0.5
-  };
-  
-
-  Plotly.newPlot('mesh', [mesh]);
+// --- Plot ---
+Plotly.newPlot('2d_chart', data, layout).then(() => {
+  Plotly.addFrames('2d_chart', frames);
+});
 

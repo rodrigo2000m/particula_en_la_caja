@@ -1,11 +1,11 @@
-let solution = Shrodinger_solution(4, 0, 0, 1e-16, 1, 1)
+let solution = Shrodinger_solution(2, 0, 0, 1e-16, 1, 1)
 
-const max_wavefuntion = Math.max(...solution.wavefunction)
+const max_wavefuntion = Math.max(...solution.completed_wavefunction)
 const max_prob_density = Math.max(...solution.prob_density)
 
 var wavefunction = {
-  x: solution.x,
-  y: solution.wavefunction.map(x => x / max_wavefuntion), //nomerlization
+  x: solution.new_x,
+  y: solution.completed_wavefunction.map(x => x / max_wavefuntion), //nomerlization
   type: 'scatter',
   mode: 'lines'
 };
