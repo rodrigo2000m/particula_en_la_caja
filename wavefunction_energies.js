@@ -40,9 +40,9 @@ function Shrodinger_solution(n1, n2, n3, l1, l2, l3){ // se puede usar una sola 
         prob_density = prob_density_x_y.map((value, i) => value*prob_density_z[i])
     }
 
-    return x, y, z, E, wavefunction, prob_density //E, x, y, z wavefunction
+    return {x, y, z, E, wavefunction, prob_density} //E, x, y, z wavefunction
 }
 
 
-//console.log(Shrodinger_solution(2, 2, 2, 1e-10, 1e-11, 1))
+//console.log(Shrodinger_solution(4, 1, 1, 1e-11, 1, 1))
 
