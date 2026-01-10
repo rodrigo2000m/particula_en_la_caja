@@ -1,5 +1,5 @@
 // --- Solución base ---
-let solution = Shrodinger_solution(2, 3, 1, 1e-16, 1e-10, 1e-16);
+let solution = Shrodinger_solution(2, 5, 0, 1e-16, 1e-16, 1e-16);
 
 const x = solution.x;
 const y = solution.y;
