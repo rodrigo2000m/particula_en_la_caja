@@ -1,7 +1,7 @@
 // =====================================
 // SOLUCIÓN BASE
 // =====================================
-let solution = Shrodinger_solution(5, 5, 5, 1e-16, 1e-16, 1e-16);
+let solution = Shrodinger_solution(2, 2, 2, 1e-16, 1e-16, 1e-16);
 
 const tensor = solution.structured_wavefunction;
 
@@ -27,7 +27,7 @@ for (let k = 0; k < nz; k++) {
 }
 
 // umbral para no dibujar todo
-const threshold = 0.03;
+const threshold = 0.05;
 
 for (let k = 0; k < nz; k++) {
   for (let i = 0; i < nx; i++) {
