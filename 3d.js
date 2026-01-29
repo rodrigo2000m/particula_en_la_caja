@@ -4,7 +4,6 @@
 let solution = Shrodinger_solution(2, 2, 2, 1e-16, 1e-16, 1e-16);
 
 const tensor = solution.structured_wavefunction;
-
 // Dimensiones
 const nz = tensor.length;
 const nx = tensor[0].length;

@@ -19,7 +19,7 @@
 	<link rel="stylesheet" href="style.css">
 
 	<script src="https://cdn.plot.ly/plotly-3.3.0.min.js" charset="utf-8"></script>
-	<script type="module" src="1d_new.js"></script>
+	<script type="module" src="1d.js"></script>
 	<script type="module" src="2d.js"></script>
 	<script type="module" src="3d.js"></script>
 
@@ -33,184 +33,156 @@
 		<h1 class="container text-white text-center p-3">Partícula en la caja</h1>
 	</header>
 
-	<div class="container d-flex justify-content-between">
-
-		<div class="sidebar col-md-1 shadow-lg rounded-3 bg-secondary text-white p-2">
-
-
-			<div style="height:80vh" class="sidebar-item d-flex justify-content-between" data-item="n1">
-				<div class="btn-group-vertical col align-text-bottom">
-					<button style="height: 5vh;" type="button" class="n_number btn btn-secondary" value="9">
-						<div class="sidebar-bar"></div>n=9
-					</button>
-					<button style="height: 5vh;" type="button" class="n_number btn btn-secondary" value="8">
-						<div class="sidebar-bar"></div>n=8
-					</button>
-					<button style="height: 6vh;" type="button" class="n_number btn btn-secondary" value="7">
-						<div class="sidebar-bar"></div>n=7
-					</button>
-					<button style="height: 7vh;" type="button" class="n_number btn btn-secondary" value="6">
-						<div class="sidebar-bar"></div>n=6
-					</button>
-					<button style="height: 8vh;" type="button" class="n_number btn btn-secondary" value="5">
-						<div class="sidebar-bar"></div>n=5
-					</button>
-					<button style="height: 10vh;" type="button" class="n_number btn btn-secondary" value="4">
-						<div class="sidebar-bar"></div>n=4
-					</button>
-					<button style="height: 12vh;" type="button" class="n_number btn btn-secondary" value="3">
-						<div class="sidebar-bar"></div>n=3
-					</button>
-					<button style="height: 15vh;" type="button" class="n_number btn btn-secondary" value="2">
-						<div class="sidebar-bar"></div>n=2
-					</button>
-					<button style="height: 25vh;" type="button" class="n_number btn btn-secondary active" value="1">
-						<div class="sidebar-bar"></div>n=1
-					</button>
-				</div>
-
-			</div>
-		</div>
-
-		<div class="main col ">
-			<div class="d-flex justify-content-center p-2">
+	<div class="container">
+		<div id="config_dimension" class="p-2 border">
+			<div class="d-flex justify-content-center">
 				<div class="button-group btn-group mx-2">
-					<button type="button" class="dimension mode-button btn btn-primary" data-mode="1d">1D</button>
-					<button type="button" class="dimension mode-button btn btn-primary" data-mode="2d">2D</button>
-					<button type="button" class="dimension mode-button btn btn-primary" data-mode="3d">3D</button>
-				</div>
-
-				<div class="mx-2 d-flex align-items-center">
-					<input type="checkbox" id="standing_wave" value="standing_wave" checked />
-					<label for="standing_wave">Onda estacionaria</label>
-				</div>
-
-				<div>
-					<label for="boxLengthSlider">Largo de la caja: </label>
-					<input type="range" id="boxLengthSlider" min="1" max="10" value="1" step="1">
-					<span id="boxLengthValue">1</span> L
+					<button data-bs-toggle="collapse" href="#1dparam" type="button" class="btn btn-primary"
+						data-mode="1d">1D</button>
+					<button data-bs-toggle="collapse" href="#2dparam" type="button" class="btn btn-primary"
+						data-mode="2d">2D</button>
+					<button data-bs-toggle="collapse" href="#3dparam" type="button" class="btn btn-primary"
+						data-mode="3d">3D</button>
 				</div>
 			</div>
 
-			<div class="content h-75 border mx-5" id="main-content">
-				<p class="m-5">Select a mode to run code</p>
+			<!--configuracion de cada una de las dimensiones-->
+			<div class="col-12">
+				<!--1D-->
+				<div id="1dparam" class="collapse show" data-bs-parent="#config_dimension">
+					<p>Hola 1d</p>
+					<div class="d-flex justify-content-center">
+						<div class="form-check form-switch px-3">
+							<input class="form-check-input" type="checkbox" id="standing_wave" value="yes" checked>
+							<label class="form-check-label" for="standing_wave">Onda estacionaria</label>
+						</div>
+						<div class="px-3">
+							<p>Largo de la caja</p>
+							<div class="d-flex justify-content-between">
+								<label for="1d_l1_value" class="form-label col-3">L1=<span
+										id="1d_l1_display">1</span></label>
+								<input type="range" class="form-range" id="1d_l1_value" min="1" max="9" value="1"
+									step="1" oninput="document.getElementById('1d_l1_display').innerText = this.value">
+							</div>
+						</div>
+						<div class="px-3">
+							<p>Nivel cuántico n</p>
+							<div class="d-flex justify-content-between">
+								<label for="1d_n1_value" class="form-label col-3">n1=<span
+										id="1d_n1_display">1</span></label>
+								<input type="range" class="form-range" id="1d_n1_value" min="1" max="9" value="1"
+									step="1" oninput="document.getElementById('1d_n1_display').innerText = this.value">
+							</div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-center">
+						<div id="1d_chart" style="width:800px; height:800px;"></div>
+					</div>
+				</div>
+			</div>
+
+			<div id="2dparam" class="collapse" data-bs-parent="#config_dimension">
+				<p>Hola 2d</p>
+				<div class="d-flex justify-content-center">
+					<div class="form-check form-switch px-3">
+						<input class="form-check-input" type="checkbox" id="standing_wave" value="yes" checked>
+						<label class="form-check-label" for="standing_wave">Onda estacionaria</label>
+					</div>
+					<div class="px-3">
+						<p>Largo de la caja</p>
+						<div class="d-flex justify-content-between">
+							<label for="2d_l1_value" class="form-label col-3">L1=<span
+									id="2d_l1_display">1</span></label>
+							<input type="range" class="form-range" id="2d_l1_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('2d_l1_display').innerText = this.value">
+						</div>
+						<div class="d-flex justify-content-between">
+							<label for="2d_l2_value" class="form-label col-3">L2=<span
+									id="2d_l2_display">1</span></label>
+							<input type="range" class="form-range" id="2d_l2_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('2d_l2_display').innerText = this.value">
+						</div>
+					</div>
+					<div class="px-3">
+						<p>Nivel cuántico n</p>
+						<div class="d-flex justify-content-between">
+							<label for="2d_n1_value" class="form-label col-3">n1=<span
+									id="2d_n1_display">1</span></label>
+							<input type="range" class="form-range" id="2d_n1_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('2d_n1_display').innerText = this.value">
+						</div>
+						<div class="d-flex justify-content-between">
+							<label for="2d_n2_value" class="form-label col-3">n2=<span
+									id="2d_n2_display">1</span></label>
+							<input type="range" class="form-range" id="2d_n2_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('2d_n2_display').innerText = this.value">
+						</div>
+					</div>
+
+				</div>
+				<div class="d-flex justify-content-center">
+					<div id="2d_chart" style="width:800px; height:800px;"></div>
+				</div>
+
+			</div>
+			<div id="3dparam" class="collapse" data-bs-parent="#config_dimension">
+				<p>Hola 3d</p>
+				<div class="d-flex justify-content-center">
+					<div class="form-check form-switch px-3">
+						<input class="form-check-input" type="checkbox" id="standing_wave" value="yes" checked>
+						<label class="form-check-label" for="standing_wave">Onda estacionaria</label>
+					</div>
+					<div class="px-3">
+						<p>Largo de la caja</p>
+						<div class="d-flex justify-content-between">
+							<label for="3d_l1_value" class="form-label col-3">L1=<span
+									id="3d_l1_display">1</span></label>
+							<input type="range" class="form-range" id="3d_l1_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('3d_l1_display').innerText = this.value">
+						</div>
+						<div class="d-flex justify-content-between">
+							<label for="3d_l2_value" class="form-label col-3">L2=<span
+									id="3d_l2_display">1</span></label>
+							<input type="range" class="form-range" id="3d_l2_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('3d_l2_display').innerText = this.value">
+						</div>
+						<div class="d-flex justify-content-between">
+							<label for="3d_l3_value" class="form-label col-3">L3=<span
+									id="3d_l3_display">1</span></label>
+							<input type="range" class="form-range" id="3d_l3_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('3d_l3_display').innerText = this.value">
+						</div>
+					</div>
+					<div class="px-3">
+						<p>Nivel cuántico n</p>
+						<div class="d-flex justify-content-between">
+							<label for="3d_n1_value" class="form-label col-3">n1=<span
+									id="3d_n1_display">1</span></label>
+							<input type="range" class="form-range" id="3d_n1_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('3d_n1_display').innerText = this.value">
+						</div>
+						<div class="d-flex justify-content-between">
+							<label for="3d_n2_value" class="form-label col-3">n2=<span
+									id="3d_n2_display">1</span></label>
+							<input type="range" class="form-range" id="3d_n2_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('3d_n2_display').innerText = this.value">
+						</div>
+						<div class="d-flex justify-content-between">
+							<label for="3d_n3_value" class="form-label col-3">n3=<span
+									id="3d_n3_display">1</span></label>
+							<input type="range" class="form-range" id="3d_n3_value" min="1" max="9" value="1" step="1"
+								oninput="document.getElementById('3d_n3_display').innerText = this.value">
+						</div>
+					</div>
+				</div>
+				<div class="d-flex justify-content-center">
+					<div id="3d_chart" style="width:600px; height:600px;"></div>
+				</div>
+
 			</div>
 		</div>
-
-
-		
 
 	</div>
-	
-	<div id="1d_chart" style="width:800px; height:800px;"></div>
-	<div id="2d_chart" style="width:800px; height:800px;"></div>
-	<div id="3d_chart" style="width:800px; height:800px;"></div>
-
-	<!--script src="1d_new.js"></script-->
-	<script>
-
-		const mainContent = document.getElementById('main-content');
-
-		function run1D(n) {
-			const boxLengthSlider = document.getElementById("boxLengthSlider");
-			const boxLength = +boxLengthSlider.value;
-			mainContent.innerHTML = `<svg id="sim" style="width:100%; height:600px;"></svg>`;
-			run1d(+n, boxLength);
-		}
-
-		const boxLengthSlider = document.getElementById("boxLengthSlider");
-		const boxLengthValue = document.getElementById("boxLengthValue");
-
-		boxLengthSlider.addEventListener("input", () => {
-			boxLengthValue.textContent = boxLengthSlider.value;
-
-			const activeNButton = document.querySelector(".n_number.active");
-			const n1 = activeNButton ? activeNButton.value : 1;
-
-			run1D(n1);
-		});
-
-		function run2D() {
-			mainContent.innerText = 'Nope 2d';
-			// Placeholder: Add your 2D logic here
-		}
-
-		function run3D() {
-			mainContent.innerText = 'Nope 3d';
-			// Placeholder: Add your 3D logic here
-		}
-
-		// Button click handler
-		document.querySelectorAll('.mode-button').forEach(button => {
-			button.addEventListener('click', () => {
-
-				// Definir que boton esta activo
-				let dim_buttons = document.getElementsByClassName("dimension")
-				for (let i = 0; i < dim_buttons.length; i++) {
-					dim_buttons[i].classList.remove("active")
-				}
-
-				// identificar que n esta seleccionado
-				let selected_n = 1
-
-				let n_numbers = document.getElementsByClassName("n_number")
-				for (let i = 0; i < n_numbers.length; i++) {
-					if (n_numbers[i].classList.contains("active")) {
-						selected_n = n_numbers[i].value
-					}
-				}
-
-				console.log("n = " + selected_n)
-				const mode = button.getAttribute('data-mode');
-				if (mode === '1d') {
-					run1D(selected_n);
-					button.classList.add("active");
-				}
-				else if (mode === '2d') {
-					run2D(selected_n);
-					button.classList.add("active");
-				}
-				else if (mode === '3d') {
-					run3D(selected_n);
-					button.classList.add("active");
-				}
-			});
-		});
-
-		document.querySelectorAll('.n_number').forEach(button => {
-			button.addEventListener('click', () => {
-				let n_numbers = document.getElementsByClassName("n_number")
-				for (let i = 0; i < n_numbers.length; i++) {
-					n_numbers[i].classList.remove("active")
-				}
-
-				button.classList.add("active")
-
-				let selected_n = button.value
-				console.log("n = " + selected_n)
-				let dim_buttons = document.getElementsByClassName("dimension")
-				for (let i = 0; i < dim_buttons.length; i++) {
-					if (dim_buttons[i].classList.contains("active")) {
-						let mode = dim_buttons[i].getAttribute("data-mode")
-						if (mode === '1d') {
-							run1D(selected_n);
-							button.classList.add("active");
-						}
-						else if (mode === '2d') {
-							run2D(selected_n);
-							button.classList.add("active");
-						}
-						else if (mode === '3d') {
-							run3D(selected_n);
-							button.classList.add("active");
-						}
-					}
-				}
-
-
-			});
-		});
-	</script>
 
 </body>
 
