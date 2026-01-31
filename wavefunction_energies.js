@@ -7,7 +7,7 @@ function Shrodinger_solution(n1, n2, n3, l1, l2, l3) { // se puede usar una sola
     // control interno del numero de punto de las animaciones
     let n_points = 25
     if (n2==0 && n3==0){
-        n_points = 100; // number of points between 0 and l for 1d animation
+        n_points = 250; // number of points between 0 and l for 1d animation
     }
     else if(n3==0 && n2!=0){
         n_points = 50; // number of points between 0 and l for 2d animation
@@ -54,7 +54,7 @@ function Shrodinger_solution(n1, n2, n3, l1, l2, l3) { // se puede usar una sola
             y_component = []
         }
     });
-    console.log(structured_wavefunction)
+    //console.log(structured_wavefunction)
 
 
     //probability density function
