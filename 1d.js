@@ -10,8 +10,6 @@ var frames = [];
 const Nt = 60;
 const omega = 2 * Math.PI;
 
-
-
 // funcion temporal
 function psiAtTime(psi, t, omega = 1) {
   return psi.map(v => v * Math.cos(omega * t));
@@ -21,7 +19,6 @@ function rhoAtTime(psi, t, omega = 1) {
   const f = Math.sin(omega * t);
   return psi.map(v => (v * f) ** 2);
 }
-
 
 // generacion de frames
 function generate_frames(psi0, maxPsi) {
@@ -55,7 +52,7 @@ function animateLoop() {
     '1d_chart',
     frames.map(f => f.name),
     {
-      frame: { duration: 40, redraw: true },
+      frame: { duration: 60, redraw: true },
       transition: { duration: 0 },
       mode: 'immediate'
     }
@@ -116,28 +113,7 @@ function reset_view() {
   };
 
 
-  Plotly.newPlot(
-    '1d_chart',
-    [
-      {
-        x: x,
-        y: psiAtTime(psi0, 0, omega).map(v => v / maxPsi),
-        mode: 'lines',
-        name: 'ψ'
-      }/*,
-    {
-      x: x,
-      y: rhoAtTime(psi0, 0, omega).map(v => v / maxRho),
-      mode: 'lines',
-      name: '|ψ|²'
-    }*/
-    ],
-    {
-      xaxis: { title: 'x' },
-      yaxis: { range: [-1.2, 1.2] },
-      showlegend: true
-    }
-  ).then(() => {
+  Plotly.newPlot('1d_chart', data, layout).then(() => {
     Plotly.addFrames('1d_chart', frames);
     if (standing_wave_active == "yes") {
       animateLoop();
