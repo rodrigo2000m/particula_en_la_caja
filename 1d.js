@@ -77,7 +77,7 @@ function reset_view() {
   const standing_wave_active = standing_wave.value;
 
   //convertir a nm l1
-  let value_l1_nm = value_l1 * 10e-9
+  let value_l1_nm = value_l1 * 10**-9
   //solucion de SE
   let solution = Shrodinger_solution(value_n1, 0, 0, value_l1_nm, 1, 1)
 
