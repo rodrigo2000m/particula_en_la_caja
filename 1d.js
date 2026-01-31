@@ -115,7 +115,7 @@ function reset_view() {
 
   Plotly.newPlot('1d_chart', data, layout).then(() => {
     Plotly.addFrames('1d_chart', frames);
-    if (standing_wave_active == "yes") {
+    if (!standing_wave.checked) {
       animateLoop();
     }
   });
