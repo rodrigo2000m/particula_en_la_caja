@@ -5,6 +5,12 @@
 const l1 = document.getElementById("1d_l1_value");
 const n1 = document.getElementById("1d_n1_value");
 const standing_wave = document.getElementById("standing_wave")
+let animationRunning = false;
+var frames = [];
+const Nt = 80;
+const omega = 2 * Math.PI;
+
+
 
 // funcion temporal
 function psiAtTime(psi, t, omega = 1) {
@@ -15,6 +21,55 @@ function rhoAtTime(psi, t, omega = 1) {
   const f = Math.sin(omega * t);
   return psi.map(v => (v * f) ** 2);
 }
+
+
+// generacion de frames
+function generate_frames(psi0, maxPsi) {
+  for (let k = 0; k < Nt; k++) {
+    const t = (k / Nt) * 2 * Math.PI;
+
+    frames.push({
+      name: `t=${t.toFixed(2)}`,
+      data: [
+        {
+          y: psiAtTime(psi0, t, omega).map(v => v / maxPsi)
+        }/*,
+        {
+          y: rhoAtTime(psi0, t, omega).map(v => v / maxRho)
+        }*/
+      ]
+    });
+  }
+}
+
+function animateLoop() {
+  const standing_wave = document.getElementById("standing_wave");
+  if (standing_wave.checked) {
+    animationRunning = false;
+    return; // corta limpio
+  }
+
+  animationRunning = true;
+
+  Plotly.animate(
+    '1d_chart',
+    frames.map(f => f.name),
+    {
+      frame: { duration: 40, redraw: true },
+      transition: { duration: 0 },
+      mode: 'immediate'
+    }
+  ).then(() => {
+    if (!standing_wave.checked) {
+      animateLoop();
+    } else {
+      animationRunning = false;
+    }
+  });
+}
+
+
+
 
 function reset_view() {
   const value_l1 = l1.value;
@@ -35,6 +90,8 @@ function reset_view() {
   const maxPsi = Math.max(...psi0.map(v => Math.abs(v)));
   const maxRho = Math.max(...rho0);
 
+  generate_frames(psi0, maxPsi)
+
   var wavefunction = {
     x: x,
     y: psiAtTime(psi0, 0).map(v => v / maxPsi),
@@ -45,31 +102,7 @@ function reset_view() {
   var data = [wavefunction]
 
   //var data = [wavefunction, prob_density];
-
-  // generacion de frames
-  var frames = [];
-  let frameIndex = 0;
-
-  const Nt = 60;
-  const omega = 2 * Math.PI;
-
-  for (let k = 0; k < Nt; k++) {
-    const t = (k / Nt) * 2 * Math.PI;
-
-    frames.push({
-      name: `t=${t.toFixed(2)}`,
-      data: [
-        {
-          y: psiAtTime(psi0, t, omega).map(v => v / maxPsi)
-        },
-        {
-          y: rhoAtTime(psi0, t, omega).map(v => v / maxRho)
-        }
-      ]
-    });
-  }
-
-  // layour y controles
+  // layout y controles
   var layout = {
     title: 'Función de onda 1D dependiente del tiempo',
     xaxis: { title: 'x' },
@@ -82,10 +115,35 @@ function reset_view() {
     }*/
   };
 
-  // graficar
-  Plotly.newPlot('1d_chart', data, layout).then(() => {
-    Plotly.addFrames('1d_chart', frames); 
+
+  Plotly.newPlot(
+    '1d_chart',
+    [
+      {
+        x: x,
+        y: psiAtTime(psi0, 0, omega).map(v => v / maxPsi),
+        mode: 'lines',
+        name: 'ψ'
+      }/*,
+    {
+      x: x,
+      y: rhoAtTime(psi0, 0, omega).map(v => v / maxRho),
+      mode: 'lines',
+      name: '|ψ|²'
+    }*/
+    ],
+    {
+      xaxis: { title: 'x' },
+      yaxis: { range: [-1.2, 1.2] },
+      showlegend: true
+    }
+  ).then(() => {
+    Plotly.addFrames('1d_chart', frames);
+    if (standing_wave_active == "yes") {
+      animateLoop();
+    }
   });
+
 }
 
 reset_view()
