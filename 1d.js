@@ -4,7 +4,7 @@
 //leer l1 y n1
 const l1 = document.getElementById("1d_l1_value");
 const n1 = document.getElementById("1d_n1_value");
-const standing_wave = document.getElementById("standing_wave")
+const standing_wave = document.getElementById("standing_wave_1d")
 let animationRunning = false;
 var frames = [];
 const Nt = 60;
@@ -43,7 +43,7 @@ function generate_frames(psi0, maxPsi) {
 }
 
 function animateLoop() {
-  const standing_wave = document.getElementById("standing_wave");
+  const standing_wave = document.getElementById("standing_wave_1d");
   if (standing_wave.checked) {
     animationRunning = false;
     return; // corta limpio
