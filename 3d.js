@@ -9,11 +9,12 @@ const n1 = document.getElementById("3d_n1_value");
 const n2 = document.getElementById("3d_n2_value");
 const n3 = document.getElementById("3d_n3_value");
 const standing_wave = document.getElementById("standing_wave_3d")
+
 let animationRunning = false;
-var frames = [];
+let frames = [];
+
 const Nt = 60;
 const omega = 2 * Math.PI;
-
 
 // funcion temporal
 function psiAtTime(psi, t, omega = 1) {
@@ -23,6 +24,8 @@ function psiAtTime(psi, t, omega = 1) {
 
 // generacion de frames
 function generate_frames(psi0, maxPsi) {
+  var frames = [];
+
   for (let k = 0; k < Nt; k++) {
     const t = (k / Nt) * 2 * Math.PI;
 
@@ -31,20 +34,20 @@ function generate_frames(psi0, maxPsi) {
       data: [{
         marker: {
           color: psiAtTime(psi0, t, omega),
-          size: psi0.map(v =>
-            4 + 8 * Math.abs(v * Math.sin(omega * t)) / maxPsi
-          )
+          size: psiAtTime(psi0, t, omega).map(v => 4 + 8 * Math.abs(v) / maxPsi),
         }
       }]
     });
   }
+
+  return frames;
 }
 
 function animateLoop() {
-  if (animationRunning) return;
-
-  const standing_wave = document.getElementById("standing_wave_3d");
-  if (standing_wave.checked) return;
+  if (standing_wave.checked) {
+    animationRunning = false;
+    return;
+  }
 
   animationRunning = true;
 
@@ -57,15 +60,13 @@ function animateLoop() {
       mode: 'immediate'
     }
   ).then(() => {
-    animationRunning = false;
     if (!standing_wave.checked) {
       animateLoop();
+    } else {
+      animationRunning = false;
     }
   });
 }
-
-
-
 
 function reset_view() {
   const value_l1 = l1.value;
@@ -80,15 +81,16 @@ function reset_view() {
   let value_l1_nm = value_l1 * 10 ** -9
   let value_l2_nm = value_l2 * 10 ** -9
   let value_l3_nm = value_l3 * 10 ** -9
+
   //solucion de SE
   let solution = Shrodinger_solution(value_n1, value_n2, value_n3, value_l1_nm, value_l2_nm, value_l3_nm)
 
   const tensor = solution.structured_wavefunction;
+
   // dimensiones
   const nz = tensor.length;
   const nx = tensor[0].length;
   const ny = tensor[0][0].length;
-
 
   // preprocesado donde agregar los datos
   let x = [], y = [], z = [], psi0 = [];
@@ -125,9 +127,12 @@ function reset_view() {
 
   psiAtTime(psi0, 0)
 
+  frames = generate_frames(psi0, maxPsi);
+
   var data = [{
     type: 'scatter3d',
     mode: 'markers',
+    hovermode: false,
     x: x,
     y: y,
     z: z,
@@ -137,7 +142,7 @@ function reset_view() {
       colorscale: 'RdBu',
       cmin: -maxPsi,
       cmax: maxPsi,
-      opacity: 0.5,
+      opacity: 0.85,
       colorbar: { title: 'ψ(x,y,z,t)' }
     }
   }];
@@ -157,11 +162,10 @@ function reset_view() {
       animateLoop();
     }
   });
-
 }
 
-
 reset_view()
+
 l1.addEventListener("input", reset_view);
 l2.addEventListener("input", reset_view);
 l3.addEventListener("input", reset_view);
