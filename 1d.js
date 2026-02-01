@@ -6,7 +6,7 @@ const l1 = document.getElementById("1d_l1_value");
 const n1 = document.getElementById("1d_n1_value");
 const standing_wave = document.getElementById("standing_wave_1d")
 let animationRunning = false;
-var frames = [];
+let frames = [];
 const Nt = 60;
 const omega = 2 * Math.PI;
 
