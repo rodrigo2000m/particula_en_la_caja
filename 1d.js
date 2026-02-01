@@ -1,3 +1,4 @@
+import { Shrodinger_solution } from './wavefunction_energies.js';
 // datos de prueba
 //let solution = Shrodinger_solution(2, 0, 0, 1e-16, 1, 1);
 

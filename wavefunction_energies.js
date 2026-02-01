@@ -3,15 +3,15 @@ const h = 6.62607015e-34 // units J*s
 const m = 9.1093837139e-31 // kg
 const factor_J_to_eV = 6.242e+18 // factor of conversion of J to eV
 
-function Shrodinger_solution(n1, n2, n3, l1, l2, l3) { // se puede usar una sola funcion, cuando es 1d n2=n3=0 y l2=l3=1 (para evitar problemas con las cuentas)
+export function Shrodinger_solution(n1, n2, n3, l1, l2, l3) { // se puede usar una sola funcion, cuando es 1d n2=n3=0 y l2=l3=1 (para evitar problemas con las cuentas)
     // control interno del numero de punto de las animaciones
     let n_points = 25
-    if (n2==0 && n3==0){
+    if (n2 == 0 && n3 == 0) {
         n_points = 250; // number of points between 0 and l for 1d animation
     }
-    else if(n3==0 && n2!=0){
+    else if (n3 == 0 && n2 != 0) {
         n_points = 50; // number of points between 0 and l for 2d animation
-    }else if(n3!=0){
+    } else if (n3 != 0) {
         n_points = 25; // number of points between 0 and l for 3d animation
     }
 
@@ -31,7 +31,7 @@ function Shrodinger_solution(n1, n2, n3, l1, l2, l3) { // se puede usar una sola
     let z_component = [];
     let structured_wavefunction = [];
     x.forEach(i => {
-        if (n2 != 0 && n3==0) {
+        if (n2 != 0 && n3 == 0) {
             y.forEach(j => {
                 y_component.push(Math.sqrt(2 / (l1)) * Math.sin(n1 * Math.PI * i / l1) * Math.sqrt(2 / (l2)) * Math.sin(n2 * Math.PI * j / l2))
             })
@@ -39,15 +39,15 @@ function Shrodinger_solution(n1, n2, n3, l1, l2, l3) { // se puede usar una sola
             //console.log(y_component)
             y_component = []
         }
-        else if (n2 != 0 && n3 != 0){
+        else if (n2 != 0 && n3 != 0) {
             y.forEach(j => {
                 z.forEach(k => {
-                    z_component.push(Math.sqrt(2 / (l1)) * Math.sin(n1 * Math.PI * i / l1) * Math.sqrt(2 / (l2)) * Math.sin(n2 * Math.PI * j / l2)*Math.sqrt(2 / (l3)) * Math.sin(n3 * Math.PI * k / l3))
+                    z_component.push(Math.sqrt(2 / (l1)) * Math.sin(n1 * Math.PI * i / l1) * Math.sqrt(2 / (l2)) * Math.sin(n2 * Math.PI * j / l2) * Math.sqrt(2 / (l3)) * Math.sin(n3 * Math.PI * k / l3))
                 })
                 y_component.push(z_component)
-                
+
                 //console.log(y_component)
-                
+
                 z_component = []
             })
             structured_wavefunction.push(y_component)
@@ -64,24 +64,38 @@ function Shrodinger_solution(n1, n2, n3, l1, l2, l3) { // se puede usar una sola
 
     let wavefunction_x_y = wavefunction_x.map((value, i) => value * wavefunction_y[i])
     let wavefunction
-
+    let prob_density
     //results from dimension problem
 
-    if (l2 == 1 & l3 == 1) {
+    if (n2 === 0 && n3 === 0) {
         wavefunction = wavefunction_x
         prob_density = prob_density_x
 
-    } else if (l3 = 1) {
+    } else if (n3 === 0) {
         wavefunction = wavefunction_x_y
         prob_density = prob_density_x.map((value, i) => value * prob_density_y[i])
+
     } else {
         wavefunction = wavefunction_z.map((value, i) => value * wavefunction_x_y[i])
-        prob_density_x_y = prob_density_x.map((value, i) => value * prob_density_y[i])
-        prob_density = prob_density_x_y.map((value, i) => value * prob_density_z[i])
+
+        const prob_density_x_y = prob_density_x.map(
+            (value, i) => value * prob_density_y[i]
+        )
+
+        prob_density = prob_density_x_y.map(
+            (value, i) => value * prob_density_z[i]
+        )
     }
 
-    return { x, y, z, E, wavefunction, structured_wavefunction, wavefunction_x, wavefunction_y, wavefunction_z, prob_density } //E, x, y, z wavefunction
-}
+return {
+    x, y, z, E,
+    wavefunction,
+    structured_wavefunction,
+    wavefunction_x,
+    wavefunction_y,
+    wavefunction_z,
+    prob_density
+}}
 
 
 //console.log(Shrodinger_solution(4, 1, 1, 1e-11, 1, 1))
